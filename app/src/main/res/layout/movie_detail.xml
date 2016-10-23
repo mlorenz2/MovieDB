@@ -1,0 +1,84 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:tools="http://schemas.android.com/tools"
+   android:layout_width="match_parent"
+   android:layout_height="match_parent"
+   android:padding="@dimen/default_padding">
+
+   <TextView
+      android:id="@+id/movie_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentTop="true"
+      android:layout_marginBottom="@dimen/default_bottom_margin"
+      android:textAppearance="?android:attr/textAppearanceLarge"
+      tools:text="Star Wars: Rogue One" />
+
+   <ImageView
+      android:id="@+id/movie_thumbnail"
+      android:layout_width="100dp"
+      android:layout_height="150dp"
+      android:layout_below="@id/movie_title"
+      android:layout_marginEnd="@dimen/default_label_space"
+      android:layout_marginRight="@dimen/default_label_space"
+      android:contentDescription="@string/movie_thumbnail_description"
+      android:visibility="gone" />
+
+   <TextView
+      android:id="@+id/overview"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/movie_title"
+      android:layout_marginBottom="@dimen/default_bottom_margin"
+      android:layout_toEndOf="@id/movie_thumbnail"
+      android:layout_toRightOf="@id/movie_thumbnail"
+      android:textAppearance="?android:attr/textAppearanceMedium"
+      tools:text="The next best Film " />
+
+   <TextView
+      android:id="@+id/user_rating_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/overview"
+      android:layout_marginBottom="@dimen/default_bottom_margin"
+      android:layout_marginEnd="@dimen/default_label_space"
+      android:layout_marginRight="@dimen/default_label_space"
+      android:layout_toEndOf="@id/movie_thumbnail"
+      android:layout_toRightOf="@id/movie_thumbnail"
+      android:text="@string/rating_label"
+      android:textAppearance="?android:attr/textAppearanceMedium" />
+
+   <TextView
+      android:id="@+id/user_rating"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/overview"
+      android:layout_toEndOf="@+id/user_rating_label"
+      android:layout_toRightOf="@+id/user_rating_label"
+      android:textAppearance="?android:attr/textAppearanceMedium"
+      tools:text="10/10" />
+
+   <TextView
+      android:id="@+id/release_date_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/user_rating"
+      android:layout_marginBottom="@dimen/default_bottom_margin"
+      android:layout_marginEnd="@dimen/default_label_space"
+      android:layout_marginRight="@dimen/default_label_space"
+      android:layout_toEndOf="@id/movie_thumbnail"
+      android:layout_toRightOf="@id/movie_thumbnail"
+      android:text="@string/release_date_label"
+      android:textAppearance="?android:attr/textAppearanceMedium" />
+
+   <TextView
+      android:id="@+id/release_date"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_below="@+id/user_rating"
+      android:layout_marginBottom="@dimen/default_bottom_margin"
+      android:layout_toEndOf="@+id/release_date_label"
+      android:layout_toRightOf="@+id/release_date_label"
+      android:textAppearance="?android:attr/textAppearanceMedium"
+      tools:text="2016/12/15" />
+
+</RelativeLayout>

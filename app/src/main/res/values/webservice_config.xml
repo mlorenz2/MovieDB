@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <string name="moviedb_base_url">https://api.themoviedb.org/3/</string>
+   <string name="moviedb_image_url">https://image.tmdb.org/t/p/w500</string>
+   <string name="moviedb_thumbnail_url">https://image.tmdb.org/t/p/w185</string>
+</resources>
