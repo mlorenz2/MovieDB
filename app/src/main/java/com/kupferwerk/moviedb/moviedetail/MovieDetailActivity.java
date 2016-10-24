@@ -16,7 +16,7 @@ import javax.inject.Inject;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
-   public static final String EXTRA_MOVIEDB_ITEM = "arg.moviedb.item";
+   public static final String EXTRA_MOVIEDB_ITEM = "extra.moviedb.item";
 
    @Inject
    Context context;
