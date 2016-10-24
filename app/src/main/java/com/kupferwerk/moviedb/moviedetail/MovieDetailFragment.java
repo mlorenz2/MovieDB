@@ -57,10 +57,6 @@ public class MovieDetailFragment extends Fragment {
       Injector.getAppComponent()
             .inject(this);
       if (getArguments().containsKey(ARG_MOVIEDB_ITEM)) {
-         // Load the dummy content specified by the fragment
-         // arguments. In a real-world scenario, use a Loader
-         // to load content from a content provider.
-         //         mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
          currentMovieDBItem = Parcels.unwrap(getArguments().getParcelable(ARG_MOVIEDB_ITEM));
       }
    }
@@ -70,34 +66,37 @@ public class MovieDetailFragment extends Fragment {
          Bundle savedInstanceState) {
       View rootView = inflater.inflate(R.layout.movie_detail, container, false);
       ButterKnife.bind(this, rootView);
-      Activity activity = this.getActivity();
-      CollapsingToolbarLayout appBarLayout = ButterKnife.findById(activity, R.id.toolbar_layout);
-      ImageView appBarImage = ButterKnife.findById(activity, R.id.backdrop);
-      if (appBarLayout != null) {
-         appBarLayout.setTitle(currentMovieDBItem.getTitle());
-         String url = activity.getString(R.string.moviedb_image_url) +
-               currentMovieDBItem.getBackdropPath();
-         picasso.load(url)
-               .fit()
-               .centerInside()
-               .into(appBarImage);
-      } else {
-         String url = activity.getString(R.string.moviedb_thumbnail_url) +
+      updateUI();
+      return rootView;
+   }
+
+   private void updateUI() {
+      if (currentMovieDBItem != null) {
+         Activity activity = this.getActivity();
+         CollapsingToolbarLayout appBarLayout = ButterKnife.findById(activity, R.id.toolbar_layout);
+         ImageView appBarImage = ButterKnife.findById(activity, R.id.backdrop);
+
+         if (appBarLayout != null) {
+            appBarLayout.setTitle(currentMovieDBItem.getTitle());
+            String url = activity.getString(R.string.moviedb_image_url) +
+                  currentMovieDBItem.getBackdropPath();
+            picasso.load(url)
+                  .fit()
+                  .centerInside()
+                  .into(appBarImage);
+         }
+
+         String thumbnail = activity.getString(R.string.moviedb_thumbnail_url) +
                currentMovieDBItem.getPosterPath();
-         movieThumbnail.setVisibility(View.VISIBLE);
-         picasso.load(url)
+         picasso.load(thumbnail)
                .fit()
                .centerInside()
                .into(movieThumbnail);
-      }
-      // Show the dummy content as text in a TextView.
-      if (currentMovieDBItem != null) {
+
          movieTitle.setText(currentMovieDBItem.getTitle());
          movieOverview.setText(currentMovieDBItem.getOverview());
          movieRating.setText(String.valueOf(currentMovieDBItem.getVoteAverage()));
          movieReleaseDate.setText(currentMovieDBItem.getReleaseDate());
       }
-
-      return rootView;
    }
 }
