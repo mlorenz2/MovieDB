@@ -4,10 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.kupferwerk.moviedb.BuildConfig;
 import com.kupferwerk.moviedb.Injector;
 import com.kupferwerk.moviedb.R;
 import com.kupferwerk.moviedb.webservice.model.MovieDBList;
+import com.kupferwerk.moviedb.webservice.model.MovieDBReviewList;
+import com.kupferwerk.moviedb.webservice.model.MovieDBVideoList;
 
 import javax.inject.Inject;
 
@@ -29,7 +30,14 @@ public class MovieDBManager {
       SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
       String endpoint = prefs.getString(context.getString(R.string.pref_endpoint_key),
             context.getString(R.string.pref_key_top_rated));
+      return movieDBEndpoints.getMoviesByPath(endpoint);
+   }
 
-      return movieDBEndpoints.getMoviesByPath(endpoint, BuildConfig.MOVIE_DB_API_KEY);
+   public Observable<MovieDBReviewList> getReviews(int movieDBId) {
+      return movieDBEndpoints.getReviews(movieDBId);
+   }
+
+   public Observable<MovieDBVideoList> getVideos(int movieDBId) {
+      return movieDBEndpoints.getTrailers(movieDBId);
    }
 }

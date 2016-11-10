@@ -6,6 +6,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.picasso.OkHttp3Downloader;
+import com.kupferwerk.moviedb.BuildConfig;
 import com.kupferwerk.moviedb.R;
 import com.kupferwerk.moviedb.webservice.CacheControlInterceptor;
 import com.kupferwerk.moviedb.webservice.MovieDBEndpoints;
@@ -13,13 +14,18 @@ import com.kupferwerk.moviedb.webservice.MovieDBManager;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
+import okhttp3.HttpUrl;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -57,6 +63,26 @@ public class ApplicationModule {
    @Provides
    OkHttpClient provideOkHttpClient() {
       return new OkHttpClient.Builder().cache(new Cache(context.getCacheDir(), CACHE_SIZE_24MB))
+            .addInterceptor(new Interceptor() {
+               @Override
+               public Response intercept(Chain chain) throws IOException {
+                  //https://futurestud
+                  // .io/tutorials/retrofit-2-how-to-add-query-parameters-to-every-request
+                  Request original = chain.request();
+                  HttpUrl originalHttpUrl = original.url();
+
+                  HttpUrl url = originalHttpUrl.newBuilder()
+                        .addQueryParameter("api_key", BuildConfig.MOVIE_DB_API_KEY)
+                        .build();
+
+                  // Request customization: add request headers
+                  Request.Builder requestBuilder = original.newBuilder()
+                        .url(url);
+
+                  Request request = requestBuilder.build();
+                  return chain.proceed(request);
+               }
+            })
             .build();
    }
 

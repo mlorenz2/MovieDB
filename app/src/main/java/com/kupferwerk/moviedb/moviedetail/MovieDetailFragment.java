@@ -13,7 +13,10 @@ import android.widget.TextView;
 
 import com.kupferwerk.moviedb.Injector;
 import com.kupferwerk.moviedb.R;
+import com.kupferwerk.moviedb.webservice.MovieDBManager;
 import com.kupferwerk.moviedb.webservice.model.MovieDB;
+import com.kupferwerk.moviedb.webservice.model.MovieDBReviewList;
+import com.kupferwerk.moviedb.webservice.model.MovieDBVideoList;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -22,10 +25,17 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func2;
+import rx.schedulers.Schedulers;
 
 public class MovieDetailFragment extends Fragment {
 
    public static final String ARG_MOVIEDB_ITEM = "arg.moviedb.item";
+   @Inject
+   MovieDBManager movieDBManager;
    @Bind (R.id.overview)
    TextView movieOverview;
    @Bind (R.id.user_rating)
@@ -58,6 +68,7 @@ public class MovieDetailFragment extends Fragment {
             .inject(this);
       if (getArguments().containsKey(ARG_MOVIEDB_ITEM)) {
          currentMovieDBItem = Parcels.unwrap(getArguments().getParcelable(ARG_MOVIEDB_ITEM));
+         fetchDetailData(currentMovieDBItem.getId());
       }
    }
 
@@ -68,6 +79,32 @@ public class MovieDetailFragment extends Fragment {
       ButterKnife.bind(this, rootView);
       updateUI();
       return rootView;
+   }
+
+   private void fetchDetailData(int movieDBId) {
+      Observable.zip(movieDBManager.getVideos(movieDBId), movieDBManager.getReviews(movieDBId),
+            new Func2<MovieDBVideoList, MovieDBReviewList, DetailViewModel>() {
+               @Override
+               public DetailViewModel call(MovieDBVideoList movieDBVideoList,
+                     MovieDBReviewList movieDBReviewList) {
+
+                  return new DetailViewModel(movieDBVideoList, movieDBReviewList);
+               }
+            })
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Action1<DetailViewModel>() {
+               @Override
+               public void call(DetailViewModel detailViewModel) {
+                  // TODO: 10.11.16 update recycler adapter here
+               }
+            }, new Action1<Throwable>() {
+               @Override
+               public void call(Throwable throwable) {
+                  // TODO: 10.11.16 handle error case here
+                  throwable.printStackTrace();
+               }
+            });
    }
 
    private void updateUI() {

@@ -4,6 +4,7 @@ import com.kupferwerk.moviedb.BaseApplication;
 import com.kupferwerk.moviedb.moviedetail.MovieDetailActivity;
 import com.kupferwerk.moviedb.moviedetail.MovieDetailFragment;
 import com.kupferwerk.moviedb.movielist.ImageAdapter;
+import com.kupferwerk.moviedb.movielist.ImgAdapter;
 import com.kupferwerk.moviedb.movielist.MovieListActivity;
 import com.kupferwerk.moviedb.webservice.MovieDBManager;
 
@@ -25,4 +26,6 @@ public interface AppComponent {
    void inject(MovieDBManager movieDBManager);
 
    void inject(MovieDetailFragment movieDetailFragment);
+
+   void inject(ImgAdapter imgAdapter);
 }
