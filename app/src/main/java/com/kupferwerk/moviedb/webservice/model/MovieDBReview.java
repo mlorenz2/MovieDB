@@ -1,8 +1,9 @@
 package com.kupferwerk.moviedb.webservice.model;
 
 import com.google.gson.annotations.Expose;
+import com.kupferwerk.moviedb.R;
 
-public class MovieDBReview {
+public class MovieDBReview implements MovieDetailItem {
 
    @Expose
    private String author;
@@ -35,6 +36,11 @@ public class MovieDBReview {
 
    public void setId(String id) {
       this.id = id;
+   }
+
+   @Override
+   public int getLayout() {
+      return R.layout.item_movie_review;
    }
 
    public String getUrl() {

@@ -2,8 +2,10 @@ package com.kupferwerk.moviedb.movielist;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.kupferwerk.moviedb.utils.EndpointUtils;
 import com.kupferwerk.moviedb.Injector;
 import com.kupferwerk.moviedb.R;
 import com.kupferwerk.moviedb.moviedetail.MovieDetailActivity;
@@ -26,7 +29,9 @@ import com.kupferwerk.moviedb.webservice.model.MovieDBList;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -35,6 +40,7 @@ import butterknife.ButterKnife;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class MovieListActivity extends AppCompatActivity {
@@ -127,6 +133,32 @@ public class MovieListActivity extends AppCompatActivity {
       subscription = movieDBManager.getMovies()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .map(new Func1<MovieDBList, MovieDBList>() {
+               @Override
+               public MovieDBList call(MovieDBList movieDBList) {
+
+                  if (!EndpointUtils.isFavoriteEndpoint(context)) {
+                     return movieDBList;
+                  }
+
+                  SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                  Set<String> savedKeys = prefs.getStringSet(MovieDetailFragment.KEY_SAVED_ITEMS,
+                        new HashSet<String>());
+                  if (savedKeys.isEmpty()) {
+                     return movieDBList;
+                  }
+                  List<MovieDB> filteredMovieDBList = new ArrayList<>();
+                  for (String key : savedKeys) {
+                     for (MovieDB movieDB : movieDBList.getMovieDBList()) {
+                        if (movieDB.getId() == Integer.parseInt(key)) {
+                           filteredMovieDBList.add(movieDB);
+                        }
+                     }
+                  }
+                  movieDBList.setMovieDBList(filteredMovieDBList);
+                  return movieDBList;
+               }
+            })
             .subscribe(new Action1<MovieDBList>() {
                @Override
                public void call(MovieDBList movieDBList) {

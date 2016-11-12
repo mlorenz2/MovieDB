@@ -4,4 +4,5 @@
    <dimen name="default_bottom_margin">8dp</dimen>
    <dimen name="default_label_space">6dp</dimen>
    <dimen name="default_padding">16dp</dimen>
+   <dimen name="movie_detail_min_height">60dp</dimen>
 </resources>

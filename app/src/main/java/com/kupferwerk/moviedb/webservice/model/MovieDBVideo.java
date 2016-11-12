@@ -2,11 +2,12 @@ package com.kupferwerk.moviedb.webservice.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.kupferwerk.moviedb.R;
 
 import org.parceler.Parcel;
 
 @Parcel
-public class MovieDBVideo {
+public class MovieDBVideo implements MovieDetailItem {
 
    @SerializedName ("iso_639_1")
    @Expose
@@ -57,6 +58,11 @@ public class MovieDBVideo {
 
    public void setLanguage(String language) {
       this.language = language;
+   }
+
+   @Override
+   public int getLayout() {
+      return R.layout.item_movie_video;
    }
 
    public String getName() {

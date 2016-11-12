@@ -2,13 +2,14 @@ package com.kupferwerk.moviedb.webservice.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.kupferwerk.moviedb.R;
 
 import org.parceler.Parcel;
 
 import java.util.List;
 
 @Parcel
-public class MovieDB {
+public class MovieDB implements MovieDetailItem {
 
    @Expose
    private boolean adult;
@@ -69,6 +70,11 @@ public class MovieDB {
 
    public void setId(int id) {
       this.id = id;
+   }
+
+   @Override
+   public int getLayout() {
+      return R.layout.item_movie_detail;
    }
 
    public String getOriginalLanguage() {

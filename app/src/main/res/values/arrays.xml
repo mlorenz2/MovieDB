@@ -4,11 +4,14 @@
    <string-array name="pref_endpoint_options">
       <item>@string/pref_label_top_rated</item>
       <item>@string/pref_label_most_popular</item>
+      <item>@string/pref_label_favorites</item>
    </string-array>
 
    <string-array name="pref_endpoint_values">
       <item>@string/pref_key_top_rated</item>
       <item>@string/pref_key_most_popular</item>
+      <item>@string/pref_key_favorites</item>
    </string-array>
+
 
 </resources>
