@@ -1,66 +1,71 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
    xmlns:tools="http://schemas.android.com/tools"
    android:layout_width="match_parent"
-   android:layout_height="match_parent"
+   android:layout_height="wrap_content"
+   android:orientation="vertical"
    android:padding="@dimen/default_padding">
 
    <TextView
       android:id="@+id/movie_title"
-      android:layout_width="wrap_content"
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_alignParentTop="true"
-      android:layout_marginBottom="@dimen/default_bottom_margin"
       android:textAppearance="?android:attr/textAppearanceLarge"
       tools:text="Star Wars: Rogue One" />
 
-   <ImageView
-      android:id="@+id/movie_thumbnail"
-      android:layout_width="100dp"
-      android:layout_height="150dp"
-      android:layout_alignParentLeft="true"
-      android:layout_alignParentStart="true"
-      android:layout_below="@+id/movie_title"
-      android:contentDescription="@string/movie_thumbnail_description" />
+   <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/default_padding"
+      android:layout_marginTop="@dimen/default_padding"
+      android:orientation="horizontal">
+
+      <ImageView
+         android:id="@+id/movie_thumbnail"
+         android:layout_width="100dp"
+         android:layout_height="match_parent"
+         android:layout_gravity="start"
+         android:adjustViewBounds="true"
+         android:contentDescription="@string/movie_thumbnail_description" />
+
+      <LinearLayout
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+         android:layout_weight="1"
+         android:orientation="vertical"
+         android:paddingEnd="@dimen/default_padding"
+         android:paddingLeft="@dimen/default_padding"
+         android:paddingRight="@dimen/default_padding"
+         android:paddingStart="@dimen/default_padding">
+
+         <TextView
+            android:id="@+id/release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            tools:text="2016/12/15" />
+
+         <TextView
+            android:id="@+id/user_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            tools:text="10/10" />
+
+         <TextView
+            android:id="@+id/add_to_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ic_star_border_orange_48dp"
+            android:gravity="center"
+            android:minWidth="100dp"
+            android:text="@string/add_to_favorite" />
+      </LinearLayout>
+   </LinearLayout>
 
    <TextView
       android:id="@+id/overview"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_alignParentLeft="true"
-      android:layout_alignParentStart="true"
-      android:layout_below="@+id/movie_thumbnail"
       android:textAppearance="?android:attr/textAppearanceMedium"
       tools:text="The next best Film " />
-
-   <TextView
-      android:id="@+id/release_date"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_below="@+id/user_rating"
-      android:layout_toEndOf="@+id/movie_thumbnail"
-      android:layout_toRightOf="@+id/movie_thumbnail"
-      android:textAppearance="?android:attr/textAppearanceMedium"
-      tools:text="2016/12/15" />
-
-   <TextView
-      android:id="@+id/user_rating"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_below="@+id/movie_title"
-      android:layout_toEndOf="@+id/movie_thumbnail"
-      android:layout_toRightOf="@+id/movie_thumbnail"
-      android:textAppearance="?android:attr/textAppearanceMedium"
-      tools:text="10/10" />
-
-   <Button
-      android:id="@+id/button"
-      android:layout_width="wrap_content"
-
-      android:layout_height="wrap_content"
-      android:layout_below="@+id/release_date"
-      android:layout_toEndOf="@+id/movie_thumbnail"
-      android:layout_toRightOf="@+id/movie_thumbnail"
-      android:background="?attr/selectableItemBackground"
-      android:text="Mark As\nFavorite" />
-
-</RelativeLayout>
+</LinearLayout>
